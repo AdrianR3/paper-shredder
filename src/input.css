@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.file-input-label {
+    @apply block text-sm font-medium text-gray-700;
+}
+.file-input {
+    @apply inset-0 flex items-end text-right px-3 text-gray-500;
+}
+.file-input-wrapper {
+    @apply relative;
+}
+.file-input-text {
+    @apply inset-0 flex items-center px-3 text-gray-500;
+}
+.file-input-custom {
+    @apply opacity-0 absolute inset-0 cursor-pointer;
+}
+
+.image-preview {
+    @apply w-full h-auto max-w-md border border-gray-300 rounded-md shadow-md
+}
