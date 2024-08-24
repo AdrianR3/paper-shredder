@@ -6,6 +6,12 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     const fileInput = document.getElementById('file');
     const file = fileInput.files[0];
     const preview = document.getElementById('preview');
+    const shredder = document.getElementById('shredder');
+
+    let secondImage = new Image();
+    secondImage.src = './assets/graph.png';
+    secondImage.classList.add('shredder-image');
+    shredder.appendChild(secondImage);
 
     if (file) {
         const reader = new FileReader();
@@ -13,6 +19,37 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
         reader.onload = function(e) {
             preview.innerHTML = `<img src="${e.target.result}" class="image-preview">`;
         };
+
+        anime({
+            targets: preview,
+            opacity: [0, 1],
+            translateY: [-100, 0],
+            duration: 500,
+            easing: 'easeOutQuad',
+            complete: function(anim) {
+
+                anime({
+                    targets: shredder,
+                    keyframes: [
+                        {value: 0, duration: 1000, right: ['-50%', '50%']},
+                        {value: 1000, duration: 2000, right: ['50%', '-50%']}
+                    ],
+                    duration: 2000,
+                    easing: 'linear',
+                    // complete: function() {
+                    //     anime({
+                    //         targets: mask,
+                    //         background: [
+                    //             'linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%)',
+                    //             'linear-gradient(to right, rgba(255, 255, 255, 0) 100%, rgba(255, 255, 255, 1) 100%)'
+                    //         ],
+                    //         duration: 1000,
+                    //         easing: 'easeOutQuad'
+                    //     });
+                    // }
+                });
+            }
+        }); 
 
         reader.readAsDataURL(file);
     } else {

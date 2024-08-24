@@ -21,3 +21,24 @@
 .image-preview {
     @apply w-full h-auto max-w-md border border-gray-300 rounded-md shadow-md
 }
+
+#shredder {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    height: 100%;
+    z-index: 3;
+}
+
+.shredder-image {
+    @apply overflow-clip;
+}
+
+/*
+#secondImage {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    height: 100%;
+    z-index: 3;
+} */
