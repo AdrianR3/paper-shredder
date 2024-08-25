@@ -27,6 +27,9 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
             duration: 500,
             easing: 'easeOutQuad',
             complete: function(anim) {
+                
+                preview.classList.add('swipe-out') // Debug
+                return; // Debug
 
                 anime({
                     targets: shredder,
@@ -50,7 +53,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                     // }
                 });
             }
-        }); 
+        });
 
         reader.readAsDataURL(file);
     } else {
