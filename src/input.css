@@ -66,14 +66,12 @@ body {
     height: 200px; */
     /* overflow: hidden; */
     mask-image: linear-gradient(to left, rgba(255, 255, 255, 0) 0%, rgba(255, 0, 0, 1) 100%);
+    mask-position: 448px 0px;
+    /* mask-repeat: ; */
+    /* animation: swipe 3s forwards; */
 }
 
 .swipe-out {
-    mask-position: 0px 50%;
-    /* animation: swipe 5s forwards; */
-}
-
-/* .swipe-out:hover::before { */
     /* content: '';
     position: absolute;
     top: 0;
@@ -89,15 +87,16 @@ body {
     /* background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 0, 0, 1) 100%); */
     /* z-index: 0; */
     /* animation: swipe 3s forwards; */
-/* } */
+}
 
 @keyframes swipe {
     from {
         /* transform: translateY(0px); */
+        /* mask-position: 100% 0px; */
     }
     to {
-        left: -100%;
+        /* left: -100%; */
         /* transform: translateY(100%); */
-        mask-position: 0px -50%;
+        /* mask-position: -99% 0px; */
     }
 }

@@ -29,6 +29,16 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
             complete: function(anim) {
                 
                 preview.classList.add('swipe-out') // Debug
+
+                anime({
+                    targets: preview,
+                    keyframes: [
+                        {duration: 2000, maskPosition: ["448px 0px", "0px 0px"]}
+                    ], 
+                    easing: 'easeOutQuad',
+                    duration: 3500
+                })
+
                 return; // Debug
 
                 anime({
