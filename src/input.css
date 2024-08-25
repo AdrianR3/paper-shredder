@@ -22,17 +22,36 @@
     @apply w-full h-auto max-w-md border border-gray-300 rounded-md shadow-md
 }
 
+body {
+    overflow: hidden;
+}
+
 #shredder {
-    position: absolute;
+    /* position: absolute;
     top: 0;
     right: -100%;
     height: 100%;
-    z-index: 3;
+    z-index: 3; */
+    
+    right: -100%;
+    opacity: 0;
 }
 
 .shredder-image {
-    @apply overflow-clip;
+    /* @apply overflow-clip; */
 }
+
+/* #mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%);
+    pointer-events: none;
+    z-index: 2;
+    transition: background 1s ease;
+}*/
 
 /*
 #secondImage {

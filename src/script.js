@@ -31,10 +31,11 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                 anime({
                     targets: shredder,
                     keyframes: [
-                        {value: 0, duration: 1000, right: ['-50%', '50%']},
-                        {value: 1000, duration: 2000, right: ['50%', '-50%']}
+                        {duration: 200, opacity: [0, 1]},
+                        {duration: 2500, right: ['-50%', '50%']},
+                        {delay: 50, duration: 250, opacity: [1, 0]}
                     ],
-                    duration: 2000,
+                    duration: 3500,
                     easing: 'linear',
                     // complete: function() {
                     //     anime({
