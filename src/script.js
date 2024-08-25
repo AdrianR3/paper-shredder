@@ -7,6 +7,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     const file = fileInput.files[0];
     const preview = document.getElementById('preview');
     const shredder = document.getElementById('shredder');
+
     const canvas = document.getElementById('canvas');
 
     let secondImage = new Image();
@@ -36,44 +37,23 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                     keyframes: [
                         {duration: 2000, maskPosition: ["448px 0px", "0px 0px"]}
                     ], 
-                    easing: 'easeOutQuad',
+                    easing: 'linear',
                     duration: 3500
                 })
 
                 const ctx = canvas.getContext('2d');
 
-                // Set canvas size to match the window size
+                console.log(ctx)
+
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
 
-                preview.innerHTML.onload = function() {
+                const img = preview.querySelector('img');
+
+                // preview/*.querySelector('img')*/.addEventListener('load', () => {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                    ctx.drawImage(preview.innerHTML, 0, 0, canvas.width, canvas.height);
-                };
-
-                // Stack overflow
-                // fileInput.addEventListener('change', (event) => {
-                //     const file = event.target.files[0];
-
-                //     if (file) {
-                //         const reader = new FileReader();
-
-                //         reader.onload = function(e) {
-                //             const img = new Image();
-
-                //             img.onload = function() {
-                //                 // Clear the canvas before drawing the new image
-                //                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                //                 // Draw the image on the canvas
-                //                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                //             };
-
-                //             img.src = e.target.result;
-                //         };
-
-                //         reader.readAsDataURL(file);
-                //     }
+                    ctx.drawImage(img, (canvas.width - img.width)/2, (canvas.height - img.height)/2, img.width, img.height);
                 // });
 
                 return; // Debug
