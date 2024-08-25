@@ -7,6 +7,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     const file = fileInput.files[0];
     const preview = document.getElementById('preview');
     const shredder = document.getElementById('shredder');
+    const canvas = document.getElementById('canvas');
 
     let secondImage = new Image();
     secondImage.src = './assets/graph.png';
@@ -38,6 +39,42 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                     easing: 'easeOutQuad',
                     duration: 3500
                 })
+
+                const ctx = canvas.getContext('2d');
+
+                // Set canvas size to match the window size
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                preview.innerHTML.onload = function() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    ctx.drawImage(preview.innerHTML, 0, 0, canvas.width, canvas.height);
+                };
+
+                // Stack overflow
+                // fileInput.addEventListener('change', (event) => {
+                //     const file = event.target.files[0];
+
+                //     if (file) {
+                //         const reader = new FileReader();
+
+                //         reader.onload = function(e) {
+                //             const img = new Image();
+
+                //             img.onload = function() {
+                //                 // Clear the canvas before drawing the new image
+                //                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                //                 // Draw the image on the canvas
+                //                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                //             };
+
+                //             img.src = e.target.result;
+                //         };
+
+                //         reader.readAsDataURL(file);
+                //     }
+                // });
 
                 return; // Debug
 
