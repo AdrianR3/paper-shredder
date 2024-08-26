@@ -7,7 +7,14 @@
 }
 .file-input {
     @apply inset-0 flex items-end text-right px-3 text-gray-500;
+
+    /* visibility: hidden; */
 }
+
+.file-input::-webkit-file-upload-button {
+    visibility: visible;
+}
+
 .file-input-wrapper {
     @apply relative;
 }
@@ -23,8 +30,11 @@
 }
 
 .image-shred {
-    @apply w-full h-full max-w-md border border-gray-300 rounded-md shadow-md;
+    @apply w-full h-full max-w-md border border-gray-300 rounded-md shadow-md pointer-events-auto;
     object-fit: cover;
+
+    cursor: grab;
+    user-select: none;
 }
 
 body {

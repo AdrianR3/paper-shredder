@@ -17,11 +17,11 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
     secondImage.classList.add('shredder-image');
     shredder.appendChild(secondImage);
 
-    let pdfMode = file.type === 'application/pdf';
-
     const realSize = false;
 
     if (file) {
+        let pdfMode = file.type === 'application/pdf';
+
         if (pdfMode) {
             console.log('PDF detected.')
             try {
@@ -72,6 +72,8 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
             duration: 500,
             easing: 'easeOutQuad',
             complete: function(anim) {
+
+                document.getElementById('formContainer').classList.add('invisible');
                 
                 // preview.classList.add('swipe-out') // Debug
 
@@ -133,14 +135,14 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
 
                         div.style.position = 'absolute';
                         div.style.left = `${5+(i % 9)*10+randomPercentage(5)}%`
-                        div.style.top = `${10+randomPercentage()}px`
+                        div.style.top = `${(y % 10)*100}px`
 
                         physicsContainer.appendChild(div);
                     }
                 }
 
-                init(); // Reinitialize Physics Engine
-                run(); // Activate Physics Engine
+                // init(); // Reinitialize Physics Engine
+                // run(); // Activate Physics Engine
 
                 return; // Debug
 
@@ -170,7 +172,30 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
             }
         });
     } else {
-        preview.innerHTML = '<p class="text-red-500 font-semibold">No file selected!</p>';
+        preview.innerHTML = '<p class="text-red-500 font-semibold transition-all">No file selected!</p>';
+        setTimeout(() => {});
+    }
+});
+
+const dropArea = document.getElementById('formContainer');
+const fileInput = document.getElementById('file');
+
+dropArea.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    dropArea.classList.add('dragover');
+});
+
+dropArea.addEventListener('dragleave', () => {
+    dropArea.classList.remove('dragover');
+});
+
+dropArea.addEventListener('drop', (event) => {
+    event.preventDefault();
+    dropArea.classList.remove('dragover');
+    const files = event.dataTransfer.files;
+    if (files.length > 0) {
+        fileInput.files = files; // Simulate file selection
+        // Here you can handle the file upload or display the file
     }
 });
 

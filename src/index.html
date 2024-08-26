@@ -7,13 +7,13 @@
         <link href="./output.css" rel="stylesheet">
     </head>
     <body class="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-slate-900">
-        <div class="w-full max-w-md p-6 rounded-lg shadow-md bg-white dark:bg-slate-800">
+        <div id="formContainer" class="w-full max-w-md p-6 rounded-lg shadow-md bg-white dark:bg-slate-800">
             <h1 class="text-3xl text-center font-bold underline mb-6 text-black dark:text-white">
             Virtual Paper Shredder
             </h1>
             <form action="./upload" id="uploadForm" method="post" enctype="multipart/form-data">
                 <div class="mb-4">
-                <label for="file" class="file-input-label block text-sm font-medium text-gray-700 dark:text-gray-300">Select document to shred</label>
+                <label for="file" class="file-input-label block text-sm font-medium text-gray-700 dark:text-gray-300">Select PDF document or image to shred</label>
                     <input
                     id="file"
                     name="file"
@@ -48,8 +48,8 @@
             id="physics"
             class="absolute w-full h-full pointer-events-none"
         ></div>
-        <footer class="text-gray-800 dark:text-white text-right absolute left-0.5 p-1 bottom-0">
-            <p class="text-sm">Disclaimer: Virtual Paper Shredder is for entertainment purposes only. Please do not upload sensitive or personal documents.</p>
+        <footer class="text-gray-800 dark:text-white text-right absolute left-0 p-1 bottom-0 rounded-tr-lg hover:bg-red-400 transition-colors select-none">
+            <p class="text-sm">Virtual Paper Shredder is for entertainment purposes only. Please do not upload sensitive or personal documents.</p>
         </footer>
 
         <script src="./script.js"></script>
