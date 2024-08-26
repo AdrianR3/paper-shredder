@@ -274,7 +274,7 @@ function mouseDrag() {
       md.body1 = world.m_groundBody;
       md.body2 = body;
       md.target.Set(mouse.x, mouse.y);
-      md.maxForce = 30000.0 * body.m_mass;
+      md.maxForce = 20*30000.0 * body.m_mass;
       mouseJoint = world.CreateJoint(md);
       body.WakeUp();
     }

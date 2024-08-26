@@ -1,6 +1,6 @@
 console.log("Hello, world! | script.js")
 
-document.getElementById('uploadForm').addEventListener('submit', function(event) {
+document.getElementById('uploadForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
     const fileInput = document.getElementById('file');
@@ -17,14 +17,51 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     secondImage.classList.add('shredder-image');
     shredder.appendChild(secondImage);
 
+    let d = true;
+
+    if (file && file.type === 'application/pdf') {
+        console.log('PDF detected.')
+        try {
+            const pdfUrl = URL.createObjectURL(file);
+            
+            const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+            
+            const page = await pdf.getPage(1);
+            
+            const viewport = page.getViewport({ scale: 1.5 });
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            
+            await page.render(renderContext).promise;
+
+            const dataURL = canvas.toDataURL();
+
+            preview.innerHTML = `<img src="${dataURL}" class="image-preview">`;
+            srcToShred = dataURL;
+            
+            d = false;
+        } catch (error) {
+            console.error('Error rendering PDF:', error);
+        }
+    }
+
     if (file) {
-        const reader = new FileReader();
+        if (d) {
+            const reader = new FileReader();
 
-        reader.onload = function(e) {
-            preview.innerHTML = `<img src="${e.target.result}" class="image-preview">`;
+            reader.onload = function(e) {
+                preview.innerHTML = `<img src="${e.target.result}" class="image-preview">`;
 
-            srcToShred = e.target.result;
-        };
+                srcToShred = e.target.result;
+            };
+        }
 
         anime({
             targets: preview,
@@ -51,7 +88,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
 
                 const img = preview.querySelector('img');
 
-                const sizeX = 10, sizeY = 10;
+                const sizeX = 40, sizeY = 5;
 
                 let imgToShred = new Image();
                 imgToShred.src = srcToShred;
@@ -61,7 +98,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
 
                 console.log(`img.width: ${img.width}`)
                 console.log(`img.height: ${img.height}`)
-                
+
                 const physicsContainer = document.getElementById('physics');
 
                 physicsContainer.width = window.innerWidth;
