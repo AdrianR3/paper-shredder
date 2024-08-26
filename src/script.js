@@ -17,43 +17,43 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
     secondImage.classList.add('shredder-image');
     shredder.appendChild(secondImage);
 
-    let d = true;
+    let pdfMode = file.type === 'application/pdf';
 
-    if (file && file.type === 'application/pdf') {
-        console.log('PDF detected.')
-        try {
-            const pdfUrl = URL.createObjectURL(file);
-            
-            const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
-            
-            const page = await pdf.getPage(1);
-            
-            const viewport = page.getViewport({ scale: 1.5 });
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-            
-            const renderContext = {
-                canvasContext: context,
-                viewport: viewport
-            };
-            
-            await page.render(renderContext).promise;
-
-            const dataURL = canvas.toDataURL();
-
-            preview.innerHTML = `<img src="${dataURL}" class="image-preview">`;
-            srcToShred = dataURL;
-            
-            d = false;
-        } catch (error) {
-            console.error('Error rendering PDF:', error);
-        }
-    }
+    const realSize = false;
 
     if (file) {
-        if (d) {
+        if (pdfMode) {
+            console.log('PDF detected.')
+            try {
+                const pdfUrl = URL.createObjectURL(file);
+                
+                const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+                
+                const page = await pdf.getPage(1);
+                
+                const viewport = page.getViewport({ scale: realSize ? 0.75 : 2.5 });
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                
+                await page.render(renderContext).promise;
+    
+                const dataURL = canvas.toDataURL();
+    
+                preview.innerHTML = `<img src="${dataURL}" class="image-preview">`;
+                srcToShred = dataURL;
+                
+                pdfMode = false;
+            } catch (error) {
+                console.error('Error rendering PDF:', error);
+            }
+        } else {
             const reader = new FileReader();
 
             reader.onload = function(e) {
@@ -61,6 +61,8 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
 
                 srcToShred = e.target.result;
             };
+
+            reader.readAsDataURL(file);
         }
 
         anime({
@@ -88,7 +90,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
 
                 const img = preview.querySelector('img');
 
-                const sizeX = 40, sizeY = 40;
+                const sizeX = 40, sizeY = 10;
                 const maxObjects = 80;
 
                 let imgToShred = new Image();
@@ -140,9 +142,6 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                 init(); // Reinitialize Physics Engine
                 run(); // Activate Physics Engine
 
-                // ctx.clearRect(0, 0, canvas.width, canvas.height);
-                // ctx.drawImage(img, (canvas.width - img.width)/2, (canvas.height - img.height)/2, img.width, img.height);
-
                 return; // Debug
 
                 anime({
@@ -170,8 +169,6 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                 }
             }
         });
-
-        reader.readAsDataURL(file);
     } else {
         preview.innerHTML = '<p class="text-red-500 font-semibold">No file selected!</p>';
     }
