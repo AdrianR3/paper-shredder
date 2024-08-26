@@ -30,7 +30,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
             easing: 'easeOutQuad',
             complete: function(anim) {
                 
-                preview.classList.add('swipe-out') // Debug
+                // preview.classList.add('swipe-out') // Debug
 
                 anime({
                     targets: preview,
@@ -52,7 +52,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                 physicsContainer.width = window.innerWidth;
                 physicsContainer.height = window.innerHeight;
 
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 20; i++) {
                     const div = document.createElement('div');
 
                     function getRandomColor() {
@@ -64,26 +64,29 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                         return color;
                     };
 
-                    function randomPercentage() {
-                        return Math.floor(Math.random() * 30);
+                    function randomPercentage(n = 30) {
+                        return Math.floor(Math.random() * n);
                     }
 
-                    div.style.width = '100px';
-                    div.style.height = '100px';
+                    // TODO: add part of image inside div
+
+                    div.style.width = '80px';
+                    div.style.height = '180px';
                     div.style.backgroundColor = getRandomColor();
 
                     div.classList.add('box2d');
+                    div.style.position = 'absolute';
+                    // div.style.top = '50%';
+                    // div.style.left = '50%';
+                    div.style.transform = `translate(${50+(i % 10)*150+randomPercentage()}px, ${50+randomPercentage()}px)`;
 
                     physicsContainer.appendChild(div);
                 }
 
                 init(); // Reinitialize Physics Engine
 
-                // preview/*.querySelector('img')*/.addEventListener('load', () => {
-                    // ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                    // ctx.drawImage(img, (canvas.width - img.width)/2, (canvas.height - img.height)/2, img.width, img.height);
-                // });
+                // ctx.clearRect(0, 0, canvas.width, canvas.height);
+                // ctx.drawImage(img, (canvas.width - img.width)/2, (canvas.height - img.height)/2, img.width, img.height);
 
                 return; // Debug
 
@@ -96,23 +99,12 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                     ],
                     duration: 3500,
                     easing: 'linear',
-                    // complete: function() {
-                    //     anime({
-                    //         targets: mask,
-                    //         background: [
-                    //             'linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%)',
-                    //             'linear-gradient(to right, rgba(255, 255, 255, 0) 100%, rgba(255, 255, 255, 1) 100%)'
-                    //         ],
-                    //         duration: 1000,
-                    //         easing: 'easeOutQuad'
-                    //     });
-                    // }
                 });
             }
         });
 
         reader.readAsDataURL(file);
     } else {
-        preview.innerHTML = '<p class="text-red-500">No file selected!</p>';
+        preview.innerHTML = '<p class="text-red-500 font-semibold">No file selected!</p>';
     }
 });
