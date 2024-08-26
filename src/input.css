@@ -19,7 +19,12 @@
 }
 
 .image-preview {
-    @apply w-full h-auto max-w-md border border-gray-300 rounded-md shadow-md
+    @apply w-full h-auto max-w-md border border-gray-300 rounded-md shadow-md;
+}
+
+.image-shred {
+    @apply w-full h-full max-w-md border border-gray-300 rounded-md shadow-md;
+    object-fit: cover;
 }
 
 body {

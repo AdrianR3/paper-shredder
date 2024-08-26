@@ -10,6 +10,8 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
 
     const canvas = document.getElementById('canvas');
 
+    let srcToShred;
+
     let secondImage = new Image();
     secondImage.src = './assets/graph.png';
     secondImage.classList.add('shredder-image');
@@ -20,6 +22,8 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
 
         reader.onload = function(e) {
             preview.innerHTML = `<img src="${e.target.result}" class="image-preview">`;
+
+            srcToShred = e.target.result;
         };
 
         anime({
@@ -68,16 +72,23 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                         return Math.floor(Math.random() * n);
                     }
 
-                    // TODO: add part of image inside div
+                    const shreddedImg = document.createElement('img');
+                    shreddedImg.src = srcToShred;
+                    shreddedImg.style.objectPosition = `${i * div.width}px 0px;`; // Not working yet
+                    setTimeout(() => {
+                        console.log(shreddedImg.style.objectPosition); // Not working yet
+                    }, 50);
+                    shreddedImg.classList.add('image-shred');
+                    div.appendChild(shreddedImg);
 
                     div.style.width = '80px';
                     div.style.height = '80px';
                     div.style.backgroundColor = getRandomColor();
 
-                    div.classList.add('box2d'); // Problematic Line
+                    div.classList.add('box2d');
 
                     div.style.position = 'absolute';
-                    div.style.left = `${5+(i % 9)*10+randomPercentage(5)}%`//px, ${50+randomPercentage()}px)`;
+                    div.style.left = `${5+(i % 9)*10+randomPercentage(5)}%`
                     div.style.top = `${10+randomPercentage()}px`
 
                     physicsContainer.appendChild(div);
