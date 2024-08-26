@@ -46,9 +46,11 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                 // })
 
                 const ctx = canvas.getContext('2d');
-
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
+
+                const width = 80;
+                const height = 80;
 
                 const img = preview.querySelector('img');
                 const physicsContainer = document.getElementById('physics');
@@ -59,30 +61,25 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                 for (let i = 0; i < 10; i++) {
                     const div = document.createElement('div');
 
-                    function getRandomColor() {
-                        const letters = '0123456789ABCDEF';
-                        let color = '#';
-                        for (let i = 0; i < 6; i++) {
-                            color += letters[Math.floor(Math.random() * 16)];
-                        }
-                        return color;
-                    };
-
-                    function randomPercentage(n = 30) {
-                        return Math.floor(Math.random() * n);
-                    }
+                    div.style.width = `${width}px`;
+                    div.style.height = `${height}px`;
 
                     const shreddedImg = document.createElement('img');
-                    shreddedImg.src = srcToShred;
-                    shreddedImg.style.objectPosition = `${i * div.width}px 0px;`; // Not working yet
-                    setTimeout(() => {
-                        console.log(shreddedImg.style.objectPosition); // Not working yet
-                    }, 50);
+                    // shreddedImg.width = '100px'; //
+                    // shreddedImg.src = srcToShred;
+                    cropImageDataURL(srcToShred, i*width, 50, width, height, function(croppedDataURL) {
+
+                        shreddedImg.src = croppedDataURL;
+        
+                    });
+
+                    // shreddedImg.style.objectPosition = `${i * div.offsetWidth}px 0px`; // Not working yet
+                    // setTimeout(() => {
+                    //     console.log(shreddedImg.style.objectPosition); // Not working yet
+                    // }, 500);
                     shreddedImg.classList.add('image-shred');
                     div.appendChild(shreddedImg);
 
-                    div.style.width = '80px';
-                    div.style.height = '80px';
                     div.style.backgroundColor = getRandomColor();
 
                     div.classList.add('box2d');
@@ -112,6 +109,19 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                     duration: 3500,
                     easing: 'linear',
                 });
+
+                function getRandomColor() {
+                    const letters = '0123456789ABCDEF';
+                    let color = '#';
+                    for (let i = 0; i < 6; i++) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                };
+
+                function randomPercentage(n = 30) {
+                    return Math.floor(Math.random() * n);
+                }
             }
         });
 
@@ -120,3 +130,28 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
         preview.innerHTML = '<p class="text-red-500 font-semibold">No file selected!</p>';
     }
 });
+
+function cropImageDataURL(imageData, x, y, width, height, callback) {
+    const img = new Image();
+    img.src = imageData;
+    
+    img.onload = function() {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = img.width;
+        canvas.height = img.height;
+        
+        ctx.drawImage(img, 0, 0);
+        
+        const imageData = ctx.getImageData(x, y, width, height);
+        const croppedCanvas = document.createElement('canvas');
+
+        croppedCanvas.width = width;
+        croppedCanvas.height = height;
+
+        croppedCanvas.getContext('2d').putImageData(imageData, 0, 0);
+        
+        callback(croppedCanvas.toDataURL());
+    };
+}
