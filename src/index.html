@@ -6,21 +6,21 @@
         <title>Paper Shredder</title>
         <link href="./output.css" rel="stylesheet">
     </head>
-    <body class="flex items-center justify-center min-h-screen bg-gray-100">
-        <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-            <h1 class="text-3xl text-center font-bold underline mb-6">
+    <body class="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-slate-900">
+        <div class="w-full max-w-md p-6 rounded-lg shadow-md bg-white dark:bg-slate-800">
+            <h1 class="text-3xl text-center font-bold underline mb-6 text-black dark:text-white">
             Virtual Paper Shredder
             </h1>
             <form action="./upload" id="uploadForm" method="post" enctype="multipart/form-data">
                 <div class="mb-4">
-                <label for="file" class="file-input-label block text-sm font-medium text-gray-700">Select document to shred</label>
+                <label for="file" class="file-input-label block text-sm font-medium text-gray-700 dark:text-gray-300">Select document to shred</label>
                     <input
                     id="file"
                     name="file"
                     type="file"
                     accept="image/*,application/pdf"
                     title="Upload File"
-                    class="file-input mt-1 block w-full text-sm text-gray-500 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:font-medium file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+                    class="file-input mt-1 block w-full text-sm text-gray-500 dark:text-gray-400 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:font-medium file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
                     >
                 </div>
                 <button
@@ -48,7 +48,7 @@
             id="physics"
             class="absolute w-full h-full pointer-events-none"
         ></div>
-        <footer class="text-gray-800 text-right absolute left-0.5 p-1 bottom-0">
+        <footer class="text-gray-800 dark:text-white text-right absolute left-0.5 p-1 bottom-0">
             <p class="text-sm">Disclaimer: Virtual Paper Shredder is for entertainment purposes only. Please do not upload sensitive or personal documents.</p>
         </footer>
 

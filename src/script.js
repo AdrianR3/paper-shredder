@@ -88,7 +88,8 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
 
                 const img = preview.querySelector('img');
 
-                const sizeX = 40, sizeY = 5;
+                const sizeX = 40, sizeY = 40;
+                const maxObjects = 80;
 
                 let imgToShred = new Image();
                 imgToShred.src = srcToShred;
@@ -106,6 +107,8 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
 
                 for (let y = 0; y < sizeY; y++) {               
                     for (let i = 0; i < sizeX; i++) {
+                        if (y * i > maxObjects) break;
+
                         const div = document.createElement('div');
 
                         div.style.width = `${width}px`;
