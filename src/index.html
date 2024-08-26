@@ -8,7 +8,7 @@
     </head>
     <body class="flex items-center justify-center min-h-screen bg-gray-100">
         <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-            <h1 class="text-3xl text-center font-bold underline mb-6">
+            <h1 id="box" class="text-3xl text-center font-bold underline mb-6">
             Virtual Paper Shredder
             </h1>
             <form action="./upload" id="uploadForm" method="post" enctype="multipart/form-data">
@@ -42,13 +42,19 @@
         ></div>
         <canvas 
             id="canvas"
-            class="absolute z-50 w-full h-full pointer-events-none"
+            class="absolute z-50 h-full pointer-events-none invisible"
         ></canvas>
+        <div
+            id="physics"
+            class="absolute w-full h-full pointer-events-none"
+        ></div>
         <footer class="text-gray-800 text-right absolute left-0.5 p-1 bottom-0">
             <p class="text-sm">Disclaimer: Virtual Paper Shredder is for entertainment purposes only. Please do not upload sensitive or personal documents.</p>
         </footer>
 
         <script src="./script.js"></script>
         <script defer src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        <script type="text/javascript" src="./box-2d.js"></script>
+        <script type="text/javascript" src="./gravity.js"></script>
     </body>
 </html>

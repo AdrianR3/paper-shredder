@@ -43,17 +43,46 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
 
                 const ctx = canvas.getContext('2d');
 
-                console.log(ctx)
-
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
 
                 const img = preview.querySelector('img');
+                const physicsContainer = document.getElementById('physics');
+
+                physicsContainer.width = window.innerWidth;
+                physicsContainer.height = window.innerHeight;
+
+                for (let i = 0; i < 5; i++) {
+                    const div = document.createElement('div');
+
+                    function getRandomColor() {
+                        const letters = '0123456789ABCDEF';
+                        let color = '#';
+                        for (let i = 0; i < 6; i++) {
+                            color += letters[Math.floor(Math.random() * 16)];
+                        }
+                        return color;
+                    };
+
+                    function randomPercentage() {
+                        return Math.floor(Math.random() * 30);
+                    }
+
+                    div.style.width = '100px';
+                    div.style.height = '100px';
+                    div.style.backgroundColor = getRandomColor();
+
+                    div.classList.add('box2d');
+
+                    physicsContainer.appendChild(div);
+                }
+
+                init(); // Reinitialize Physics Engine
 
                 // preview/*.querySelector('img')*/.addEventListener('load', () => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    // ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                    ctx.drawImage(img, (canvas.width - img.width)/2, (canvas.height - img.height)/2, img.width, img.height);
+                    // ctx.drawImage(img, (canvas.width - img.width)/2, (canvas.height - img.height)/2, img.width, img.height);
                 // });
 
                 return; // Debug
