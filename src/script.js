@@ -32,14 +32,14 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                 
                 // preview.classList.add('swipe-out') // Debug
 
-                anime({
-                    targets: preview,
-                    keyframes: [
-                        {duration: 2000, maskPosition: ["448px 0px", "0px 0px"]}
-                    ], 
-                    easing: 'linear',
-                    duration: 3500
-                })
+                // anime({
+                //     targets: preview,
+                //     keyframes: [
+                //         {duration: 2000, maskPosition: ["448px 0px", "0px 0px"]}
+                //     ], 
+                //     easing: 'linear',
+                //     duration: 3500
+                // })
 
                 const ctx = canvas.getContext('2d');
 
@@ -52,7 +52,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                 physicsContainer.width = window.innerWidth;
                 physicsContainer.height = window.innerHeight;
 
-                for (let i = 0; i < 20; i++) {
+                for (let i = 0; i < 10; i++) {
                     const div = document.createElement('div');
 
                     function getRandomColor() {
@@ -71,19 +71,20 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                     // TODO: add part of image inside div
 
                     div.style.width = '80px';
-                    div.style.height = '180px';
+                    div.style.height = '80px';
                     div.style.backgroundColor = getRandomColor();
 
-                    div.classList.add('box2d');
+                    div.classList.add('box2d'); // Problematic Line
+
                     div.style.position = 'absolute';
-                    // div.style.top = '50%';
-                    // div.style.left = '50%';
-                    div.style.transform = `translate(${50+(i % 10)*150+randomPercentage()}px, ${50+randomPercentage()}px)`;
+                    div.style.left = `${5+(i % 9)*10+randomPercentage(5)}%`//px, ${50+randomPercentage()}px)`;
+                    div.style.top = `${10+randomPercentage()}px`
 
                     physicsContainer.appendChild(div);
                 }
 
                 init(); // Reinitialize Physics Engine
+                run(); // Activate Physics Engine
 
                 // ctx.clearRect(0, 0, canvas.width, canvas.height);
                 // ctx.drawImage(img, (canvas.width - img.width)/2, (canvas.height - img.height)/2, img.width, img.height);
