@@ -49,46 +49,52 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
 
-                const width = 80;
-                const height = 80;
-
                 const img = preview.querySelector('img');
+
+                const sizeX = 10, sizeY = 10;
+
+                let imgToShred = new Image();
+                imgToShred.src = srcToShred;
+
+                const width = imgToShred.width/(sizeX);
+                const height = imgToShred.height/(sizeY);
+
+                console.log(`img.width: ${img.width}`)
+                console.log(`img.height: ${img.height}`)
+                
                 const physicsContainer = document.getElementById('physics');
 
                 physicsContainer.width = window.innerWidth;
                 physicsContainer.height = window.innerHeight;
 
-                for (let i = 0; i < 10; i++) {
-                    const div = document.createElement('div');
+                for (let y = 0; y < sizeY; y++) {               
+                    for (let i = 0; i < sizeX; i++) {
+                        const div = document.createElement('div');
 
-                    div.style.width = `${width}px`;
-                    div.style.height = `${height}px`;
+                        div.style.width = `${width}px`;
+                        div.style.height = `${height}px`;
 
-                    const shreddedImg = document.createElement('img');
-                    // shreddedImg.width = '100px'; //
-                    // shreddedImg.src = srcToShred;
-                    cropImageDataURL(srcToShred, i*width, 50, width, height, function(croppedDataURL) {
+                        const shreddedImg = document.createElement('img');
+                        // shreddedImg.src = srcToShred;
+                        cropImageDataURL(srcToShred, i*width, y*height, imgToShred.width/sizeX, imgToShred.height/sizeY, function(croppedDataURL) {
 
-                        shreddedImg.src = croppedDataURL;
-        
-                    });
+                            shreddedImg.src = croppedDataURL;
+            
+                        });
 
-                    // shreddedImg.style.objectPosition = `${i * div.offsetWidth}px 0px`; // Not working yet
-                    // setTimeout(() => {
-                    //     console.log(shreddedImg.style.objectPosition); // Not working yet
-                    // }, 500);
-                    shreddedImg.classList.add('image-shred');
-                    div.appendChild(shreddedImg);
+                        shreddedImg.classList.add('image-shred');
+                        div.appendChild(shreddedImg);
 
-                    div.style.backgroundColor = getRandomColor();
+                        // div.style.backgroundColor = getRandomColor();
 
-                    div.classList.add('box2d');
+                        div.classList.add('box2d');
 
-                    div.style.position = 'absolute';
-                    div.style.left = `${5+(i % 9)*10+randomPercentage(5)}%`
-                    div.style.top = `${10+randomPercentage()}px`
+                        div.style.position = 'absolute';
+                        div.style.left = `${5+(i % 9)*10+randomPercentage(5)}%`
+                        div.style.top = `${10+randomPercentage()}px`
 
-                    physicsContainer.appendChild(div);
+                        physicsContainer.appendChild(div);
+                    }
                 }
 
                 init(); // Reinitialize Physics Engine
