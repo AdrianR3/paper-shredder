@@ -1,4 +1,4 @@
-console.log("Hello, world! | script.js")
+console.log("Virtual Paper Shredder | Created by AdrianR3 with Box2D Physics Engine")
 
 document.getElementById('uploadForm').addEventListener('submit', async function(event) {
     event.preventDefault();
@@ -8,14 +8,14 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
     const preview = document.getElementById('preview');
     const shredder = document.getElementById('shredder');
 
-    const canvas = document.getElementById('canvas');
+    // const canvas = document.getElementById('canvas');
 
     let srcToShred;
 
-    let secondImage = new Image();
-    secondImage.src = './assets/graph.png';
-    secondImage.classList.add('shredder-image');
-    shredder.appendChild(secondImage);
+    let shredderImg = new Image();
+    shredderImg.src = './assets/shredder.jpg';
+    shredderImg.classList.add('shredder-image');
+    shredder.appendChild(shredderImg);
 
     const realSize = getConfig('RealisticSize') == 1;
 
@@ -30,8 +30,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                 const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
                 
                 const page = await pdf.getPage(1);
-                
-                console.log(realSize ? 0.75 : getConfig('Scale'))
+            
                 const viewport = page.getViewport({ scale: realSize ? 0.75 : getConfig('Scale') });
                 const canvas = document.createElement('canvas');
                 const context = canvas.getContext('2d');
@@ -66,39 +65,28 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
             reader.readAsDataURL(file);
         }
 
+        document.body.classList.add('dissappear');
+
         anime({
             targets: preview,
             opacity: [0, 1],
             translateY: [-100, 0],
             duration: 500,
+            delay: 1000,
             easing: 'easeOutQuad',
             complete: function(anim) {
 
-                document.getElementById('formContainer').classList.add('invisible');
-                
-                // preview.classList.add('swipe-out') // Debug
-
-                // anime({
-                //     targets: preview,
-                //     keyframes: [
-                //         {duration: 2000, maskPosition: ["448px 0px", "0px 0px"]}
-                //     ], 
-                //     easing: 'linear',
-                //     duration: 3500
-                // })
-
-
-                // Debug
-                // shredder.style.opacity = "0.5";
-
+                document.getElementById('formContainer').classList.add('dissappear');
+                // document.getElementById('formContainer').classList.add('invisible');
 
                 anime({
                     targets: shredder,
                     keyframes: [
-                        {duration: 200, opacity: [0, 0.5]},
+                        {duration: 200, opacity: [0, 1]},
                         {duration: 2500/2, right: ['-50%', '0%']},
-                        {delay: 500, duration: 2500/2, right: ['0%', '50%']},
-                        {delay: 50, duration: 250, opacity: [0.5, 0]}
+                        {delay: 0, duration: 2500/2, right: ['0%', '50%']},
+                        {delay: 0, duration: 250, opacity: [1, 0]},
+                        {delay: 0, duration: 300, opacity: [0, 0]}
                     ],
                     duration: 3500,
                     easing: 'linear',
@@ -114,9 +102,9 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                     complete: () => latch.countDown()
                 });
 
-                const ctx = canvas.getContext('2d');
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+                // const ctx = canvas.getContext('2d');
+                // canvas.width = window.innerWidth;
+                // canvas.height = window.innerHeight;
 
                 const img = preview.querySelector('img');
 
@@ -129,8 +117,8 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                 const width = imgToShred.width/(sizeX);
                 const height = imgToShred.height/(sizeY);
 
-                console.log(`img.width: ${img.width}`)
-                console.log(`img.height: ${img.height}`)
+                console.log(`img.width: ${img.width}/${sizeX}`)
+                console.log(`img.height: ${img.height}/${sizeY}`)
 
                 const physicsContainer = document.getElementById('physics');
 
@@ -174,18 +162,12 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                         div.classList.add('box2d');
 
                         div.style.position = 'absolute';
-                        // div.style.left = `${5+(i % 18)*5/*+randomPercentage(5)*/}%`
                         
                         const dxpx = getConfig('XSpacing'), dypx = getConfig('YSpacing');
                         // const dxpx = 20, dypx = 75;
 
                         div.style.left = `${i * dxpx}px`
                         div.style.top = `${y * dypx}px`
-
-                        // div.style.top = `${(y/*  % 4 */)*200}px`
-
-                        // div.style.left = `${5+(i % 30)*40}px`
-
 
                         physicsContainer.appendChild(div);
                     }
@@ -219,27 +201,29 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
     }
 });
 
-const dropArea = document.getElementById('formContainer');
-const fileInput = document.getElementById('file');
+// Not used yet
 
-dropArea.addEventListener('dragover', (event) => {
-    event.preventDefault();
-    dropArea.classList.add('dragover');
-});
+// const dropArea = document.getElementById('formContainer');
+// const fileInput = document.getElementById('file');
 
-dropArea.addEventListener('dragleave', () => {
-    dropArea.classList.remove('dragover');
-});
+// dropArea.addEventListener('dragover', (event) => {
+//     event.preventDefault();
+//     dropArea.classList.add('dragover');
+// });
 
-dropArea.addEventListener('drop', (event) => {
-    event.preventDefault();
-    dropArea.classList.remove('dragover');
-    const files = event.dataTransfer.files;
-    if (files.length > 0) {
-        fileInput.files = files; // Simulate file selection
-        // Here you can handle the file upload or display the file
-    }
-});
+// dropArea.addEventListener('dragleave', () => {
+//     dropArea.classList.remove('dragover');
+// });
+
+// dropArea.addEventListener('drop', (event) => {
+//     event.preventDefault();
+//     dropArea.classList.remove('dragover');
+//     const files = event.dataTransfer.files;
+//     if (files.length > 0) {
+//         fileInput.files = files; // Simulate file selection
+//         // Here you can handle the file upload or display the file
+//     }
+// });
 
 function cropImageDataURL(imageData, x, y, width, height, callback) {
     const img = new Image();
@@ -275,6 +259,8 @@ realisticSizeSlider.addEventListener('input', (e) => {
         scaleSlider.removeAttribute('disabled');
     }
 })
+
+document.getElementById('shredder').ondragstart = function() { return false; };
 
 // From Github Gist by nowelium
 let CountdownLatch = function (limit) {

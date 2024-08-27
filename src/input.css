@@ -47,7 +47,16 @@ body {
     overflow: hidden;
 }
 
-body::before {
+body.dissappear::before {
+    opacity: 0 !important;
+    transition: opacity 0.5s;
+}
+
+:not(body).dissappear {
+    opacity: 0 !important;
+}
+
+body.background::before {
     content: '';
     position: absolute;
     top: 0;
@@ -61,6 +70,11 @@ body::before {
     transform: rotate(45deg);
     transform-origin: top right;
     z-index: -1;
+
+    filter: blur(1.75px);
+    opacity: 0.25;
+
+    transition: all 0.5s;
 }
 
 #shredder {
@@ -68,16 +82,7 @@ body::before {
     opacity: 0;
 }
 
-.swipe-out img {
-    z-index: 1;
-    /* mask-image: linear-gradient(black, transparent); */
-}
-
-.swipe-out {
-    mask-image: linear-gradient(to left, rgba(255, 255, 255, 0) 0%, rgba(255, 0, 0, 1) 100%);
-    mask-position: 448px 0px;
-}
-
+/* 
 @keyframes swipe {
     from {
         mask-position: 100% 0px;
@@ -85,7 +90,7 @@ body::before {
     to {
         mask-position: -99% 0px;
     }
-}
+} */
 
 .settings-row {
     margin-bottom: 5px;

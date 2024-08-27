@@ -888,7 +888,16 @@ body {
   overflow: hidden;
 }
 
-body::before {
+body.dissappear::before {
+  opacity: 0 !important;
+  transition: opacity 0.5s;
+}
+
+:not(body).dissappear {
+  opacity: 0 !important;
+}
+
+body.background::before {
   content: '';
   position: absolute;
   top: 0;
@@ -902,6 +911,9 @@ body::before {
   transform: rotate(45deg);
   transform-origin: top right;
   z-index: -1;
+  filter: blur(1.75px);
+  opacity: 0.25;
+  transition: all 0.5s;
 }
 
 #shredder {
@@ -909,29 +921,15 @@ body::before {
   opacity: 0;
 }
 
-.swipe-out img {
-  z-index: 1;
-  /* mask-image: linear-gradient(black, transparent); */
-}
-
-.swipe-out {
-  -webkit-mask-image: linear-gradient(to left, rgba(255, 255, 255, 0) 0%, rgba(255, 0, 0, 1) 100%);
-          mask-image: linear-gradient(to left, rgba(255, 255, 255, 0) 0%, rgba(255, 0, 0, 1) 100%);
-  -webkit-mask-position: 448px 0px;
-          mask-position: 448px 0px;
-}
-
+/* 
 @keyframes swipe {
-  from {
-    -webkit-mask-position: 100% 0px;
-            mask-position: 100% 0px;
-  }
-
-  to {
-    -webkit-mask-position: -99% 0px;
-            mask-position: -99% 0px;
-  }
-}
+    from {
+        mask-position: 100% 0px;
+    }
+    to {
+        mask-position: -99% 0px;
+    }
+} */
 
 .settings-row {
   margin-bottom: 5px;
@@ -1116,5 +1114,10 @@ body::before {
   .dark\:text-white {
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
+  }
+
+  .dark\:hover\:bg-red-800:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(153 27 27 / var(--tw-bg-opacity));
   }
 }
