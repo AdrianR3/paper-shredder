@@ -31,7 +31,8 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                 
                 const page = await pdf.getPage(1);
                 
-                const viewport = page.getViewport({ scale: realSize ? 0.75 : 1.5 });
+                console.log(realSize ? 0.75 : getConfig('Scale'))
+                const viewport = page.getViewport({ scale: realSize ? 0.75 : getConfig('Scale') });
                 const canvas = document.createElement('canvas');
                 const context = canvas.getContext('2d');
                 canvas.height = viewport.height;
@@ -86,13 +87,25 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                 //     duration: 3500
                 // })
 
+                anime({
+                    targets: shredder,
+                    keyframes: [
+                        {duration: 200, opacity: [0, 1]},
+                        {duration: 2500, right: ['-50%', '50%']},
+                        {delay: 50, duration: 250, opacity: [1, 0]}
+                    ],
+                    duration: 3500,
+                    easing: 'linear',
+                    complete: () => latch.countDown()
+                });
+
                 const ctx = canvas.getContext('2d');
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
 
                 const img = preview.querySelector('img');
 
-                const sizeX = getConfig('XSpacing'), sizeY = getConfig('YSpacing');
+                const sizeX = getConfig('Columns'), sizeY = getConfig('Rows');
                 const maxObjects = getConfig('MaxObjects');
 
                 let imgToShred = new Image();
@@ -109,16 +122,21 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                 physicsContainer.width = window.innerWidth;
                 physicsContainer.height = window.innerHeight;
 
-                let latch = new CountdownLatch(sizeY * sizeX);
+                let latch = new CountdownLatch(sizeY * sizeX + 1);
+
+                const trueScale = realSize ? 1 : getConfig('Scale');
 
                 for (let y = 0; y < sizeY; y++) {               
                     for (let i = 0; i < sizeX; i++) {
-                        if ((y * sizeX + i) >= maxObjects) break;
+                        if ((y * sizeX + i) >= maxObjects) {
+                            latch.countDown();
+                            continue;
+                        };
 
                         const div = document.createElement('div');
 
-                        div.style.width = `${width}px`;
-                        div.style.height = `${height}px`;
+                        div.style.width = `${width * trueScale}px`;
+                        div.style.height = `${height * trueScale}px`;
 
                         const shreddedImg = document.createElement('img');
                         // shreddedImg.src = srcToShred;
@@ -133,6 +151,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                         })
 
                         shreddedImg.classList.add('image-shred');
+                        shreddedImg.classList.add('invisible');
                         div.appendChild(shreddedImg);
 
                         // div.style.backgroundColor = getRandomColor();
@@ -142,7 +161,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                         div.style.position = 'absolute';
                         // div.style.left = `${5+(i % 18)*5/*+randomPercentage(5)*/}%`
                         
-                        const dxpx = 40, dypx = 200;
+                        const dxpx = getConfig('XSpacing'), dypx = getConfig('YSpacing');
                         // const dxpx = 20, dypx = 75;
 
                         div.style.left = `${i * dxpx}px`
@@ -158,23 +177,11 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                 }
 
                 latch.await(() => {
-                    console.log('done all');
+
+                    document.querySelectorAll('.image-shred.invisible').forEach((el) => el.classList.remove('invisible'));
+
                     init(); // Reinitialize Physics Engine
                     run(); // Activate Physics Engine
-                });
-                  
-
-                return; // Debug
-
-                anime({
-                    targets: shredder,
-                    keyframes: [
-                        {duration: 200, opacity: [0, 1]},
-                        {duration: 2500, right: ['-50%', '50%']},
-                        {delay: 50, duration: 250, opacity: [1, 0]}
-                    ],
-                    duration: 3500,
-                    easing: 'linear',
                 });
 
                 function getRandomColor() {
@@ -243,6 +250,16 @@ function cropImageDataURL(imageData, x, y, width, height, callback) {
         callback(croppedCanvas.toDataURL());
     };
 }
+
+const realisticSizeSlider = document.getElementById('settingRealisticSize');
+realisticSizeSlider.addEventListener('input', (e) => {
+    const scaleSlider = document.getElementById('settingScale');
+    if (e.target.value == 1) {
+        scaleSlider.setAttribute('disabled', '');
+    } else {
+        scaleSlider.removeAttribute('disabled');
+    }
+})
 
 // From Github Gist by nowelium
 let CountdownLatch = function (limit) {
