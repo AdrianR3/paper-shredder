@@ -47,6 +47,22 @@ body {
     overflow: hidden;
 }
 
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 500vh;
+    background-image: url('./assets/undraw_note.svg');
+    background-size: 50px;
+    background-repeat: repeat;
+    /* background-color: red; */
+    transform: rotate(45deg);
+    transform-origin: top right;
+    z-index: -1;
+}
+
 #shredder {
     right: -100%;
     opacity: 0;

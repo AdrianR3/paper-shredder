@@ -87,15 +87,30 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                 //     duration: 3500
                 // })
 
+
+                // Debug
+                // shredder.style.opacity = "0.5";
+
+
                 anime({
                     targets: shredder,
                     keyframes: [
-                        {duration: 200, opacity: [0, 1]},
-                        {duration: 2500, right: ['-50%', '50%']},
-                        {delay: 50, duration: 250, opacity: [1, 0]}
+                        {duration: 200, opacity: [0, 0.5]},
+                        {duration: 2500/2, right: ['-50%', '0%']},
+                        {delay: 500, duration: 2500/2, right: ['0%', '50%']},
+                        {delay: 50, duration: 250, opacity: [0.5, 0]}
                     ],
                     duration: 3500,
                     easing: 'linear',
+                    begin: () => {
+                        anime({
+                            targets: preview,
+                            opacity: [1, 0],
+                            duration: 500,
+                            delay: 1000,
+                            easing: 'easeOutQuad',
+                        });
+                    },
                     complete: () => latch.countDown()
                 });
 

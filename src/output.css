@@ -586,6 +586,10 @@ video {
   left: 0px;
 }
 
+.z-10 {
+  z-index: 10;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -882,6 +886,22 @@ video {
 
 body {
   overflow: hidden;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200vw;
+  height: 500vh;
+  background-image: url('./assets/undraw_note.svg');
+  background-size: 50px;
+  background-repeat: repeat;
+  /* background-color: red; */
+  transform: rotate(45deg);
+  transform-origin: top right;
+  z-index: -1;
 }
 
 #shredder {
