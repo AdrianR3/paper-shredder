@@ -1,10 +1,16 @@
 # Virtual Paper Shredder
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f44f7b94-cd4c-4893-a174-be4636f4330d/deploy-status)](https://app.netlify.com/sites/papershredder/deploys)
+<br>
 
 > "The unnecessary website you didn't know you needed." - Wise Person
 
+<br>
+
 ## Live Website
 
-`Coming soon...`
+**See the virtual paper shredder in action: https://papershredder.netlify.app/**
+
+<br>
 
 ## Usage
 
@@ -32,3 +38,7 @@ There are 7 configuration sliders available in the main form:
 Run `npm install` to install depencencies.
 
 Run `npm run dev` to have tailwind start watching for changes.
+
+### Building
+
+Run `npm run build` to parse the tailwind styles once.
