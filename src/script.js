@@ -17,7 +17,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
     secondImage.classList.add('shredder-image');
     shredder.appendChild(secondImage);
 
-    const realSize = false;
+    const realSize = true;
 
     if (file) {
         let pdfMode = file.type === 'application/pdf';
@@ -93,7 +93,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                 const img = preview.querySelector('img');
 
                 const sizeX = 40, sizeY = 10;
-                const maxObjects = 80;
+                const maxObjects = 400;
 
                 let imgToShred = new Image();
                 imgToShred.src = srcToShred;
@@ -109,9 +109,11 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                 physicsContainer.width = window.innerWidth;
                 physicsContainer.height = window.innerHeight;
 
+                let latch = new CountdownLatch(sizeY * sizeX);
+
                 for (let y = 0; y < sizeY; y++) {               
                     for (let i = 0; i < sizeX; i++) {
-                        if (y * i > maxObjects) break;
+                        if ((y * sizeX + i) >= maxObjects) break;
 
                         const div = document.createElement('div');
 
@@ -126,6 +128,10 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
             
                         });
 
+                        shreddedImg.addEventListener('load', () => {
+                            latch.countDown();
+                        })
+
                         shreddedImg.classList.add('image-shred');
                         div.appendChild(shreddedImg);
 
@@ -134,15 +140,28 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                         div.classList.add('box2d');
 
                         div.style.position = 'absolute';
-                        div.style.left = `${5+(i % 9)*10+randomPercentage(5)}%`
-                        div.style.top = `${(y % 10)*100}px`
+                        // div.style.left = `${5+(i % 18)*5/*+randomPercentage(5)*/}%`
+                        const dxpx = 40, dypx = 200;
+                        // const dxpx = 20, dypx = 75;
+
+                        div.style.left = `${i * dxpx}px`
+                        div.style.top = `${y * dypx}px`
+
+                        // div.style.top = `${(y/*  % 4 */)*200}px`
+
+                        // div.style.left = `${5+(i % 30)*40}px`
+
 
                         physicsContainer.appendChild(div);
                     }
                 }
 
-                // init(); // Reinitialize Physics Engine
-                // run(); // Activate Physics Engine
+                latch.await(() => {
+                    console.log('done all');
+                    init(); // Reinitialize Physics Engine
+                    run(); // Activate Physics Engine
+                });
+                  
 
                 return; // Debug
 
@@ -223,3 +242,21 @@ function cropImageDataURL(imageData, x, y, width, height, callback) {
         callback(croppedCanvas.toDataURL());
     };
 }
+
+// From Github Gist by nowelium
+let CountdownLatch = function (limit) {
+    this.limit = limit;
+    this.count = 0;
+    this.waitBlock = function (){};
+};
+
+CountdownLatch.prototype.countDown = function () {
+    this.count = this.count + 1;
+    if(this.limit <= this.count){
+        return this.waitBlock();
+    }
+};
+
+CountdownLatch.prototype.await = function(callback) {
+    this.waitBlock = callback;
+};

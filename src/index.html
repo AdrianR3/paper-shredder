@@ -13,16 +13,30 @@
             </h1>
             <form action="./upload" id="uploadForm" method="post" enctype="multipart/form-data">
                 <div class="mb-4">
-                <label for="file" class="file-input-label block text-sm font-medium text-gray-700 dark:text-gray-300">Select PDF document or image to shred</label>
-                    <input
-                    id="file"
-                    name="file"
-                    type="file"
-                    accept="image/*,application/pdf"
-                    title="Upload File"
-                    class="file-input mt-1 block w-full text-sm text-gray-500 dark:text-gray-400 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:font-medium file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
-                    >
-                </div>
+                    <label for="file" class="file-input-label block text-sm font-medium text-gray-700 dark:text-gray-300">Select PDF document or image to shred</label>
+                        <input
+                        id="file"
+                        name="file"
+                        type="file"
+                        accept="image/*,application/pdf"
+                        title="Upload File"
+                        class="file-input mt-1 block w-full text-sm text-gray-500 dark:text-gray-400 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:font-medium file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+                        >
+                    </div>
+                    <div class="mb-5">
+                        <div class="settings-row flex items-center text-center">
+                            <span class="settings-span">Max Objects</span>
+                            <input class="settings-slider" type="range" min="1" max="1000" value="400"  id="maxObjects">
+                        </div>
+                        <div class="settings-row flex items-center text-center">
+                            <span class="settings-span">Max Objects</span>
+                            <input class="settings-slider" type="range" min="1" max="1000" value="400"  id="maxObjects">
+                        </div>
+                        <div class="settings-row flex items-center text-center">
+                            <span class="settings-span">Max Objects</span>
+                            <input class="settings-slider" type="range" min="1" max="1000" value="400"  id="maxObjects">
+                        </div>
+                    </div>
                 <button
                 type="submit"
                 class="w-full py-2 px-4 bg-violet-500 text-white font-semibold rounded-lg shadow-md hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2"
