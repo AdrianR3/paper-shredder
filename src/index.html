@@ -11,37 +11,50 @@
             <h1 class="text-3xl text-center font-bold underline mb-6 text-black dark:text-white">
             Virtual Paper Shredder
             </h1>
-            <form action="./upload" id="uploadForm" method="post" enctype="multipart/form-data">
+            <form id="uploadForm" method="post" enctype="multipart/form-data">
                 <div class="mb-4">
-                    <label for="file" class="file-input-label block text-sm font-medium text-gray-700 dark:text-gray-300">Select PDF document or image to shred</label>
-                        <input
+                    <label for="file" class="form-label">Select PDF document or image to shred</label>
+                    <input
                         id="file"
                         name="file"
                         type="file"
                         accept="image/*,application/pdf"
                         title="Upload File"
                         class="file-input mt-1 block w-full text-sm text-gray-500 dark:text-gray-400 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:font-medium file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
-                        >
+                    >
+                </div>
+                <div class="mb-5">
+                    <label class="form-label">Shredder Settings</label>
+                    <div class="settings-row flex items-center text-center">
+                        <span class="settings-span">Max Objects</span>
+                        <input class="settings-slider" type="range" min="1" max="1000" value="400" id="settingMaxObjects">
                     </div>
-                    <div class="mb-5">
-                        <div class="settings-row flex items-center text-center">
-                            <span class="settings-span">Max Objects</span>
-                            <input class="settings-slider" type="range" min="1" max="1000" value="400"  id="maxObjects">
-                        </div>
-                        <div class="settings-row flex items-center text-center">
-                            <span class="settings-span">Max Objects</span>
-                            <input class="settings-slider" type="range" min="1" max="1000" value="400"  id="maxObjects">
-                        </div>
-                        <div class="settings-row flex items-center text-center">
-                            <span class="settings-span">Max Objects</span>
-                            <input class="settings-slider" type="range" min="1" max="1000" value="400"  id="maxObjects">
-                        </div>
+                    <div class="settings-row flex items-center text-center">
+                        <span class="settings-span">X Spacing</span>
+                        <input class="settings-slider" type="range" min="1" max="100" value="40" id="settingXSpacing">
+                        <span class="settings-span">Y Spacing</span>
+                        <input class="settings-slider" type="range" min="1" max="100" value="10" id="settingYSpacing">
                     </div>
+                    <div class="settings-row flex items-center text-center">
+                        <span class="settings-span">Rows</span>
+                        <input class="settings-slider" type="range" min="1" max="100" value="10" id="settingRows">
+                        <span class="settings-span">Columns</span>
+                        <input class="settings-slider" type="range" min="1" max="100" value="10" id="settingColumns">
+                    </div>
+                    <div class="settings-row flex items-center text-center">
+                        <span class="settings-span">Use Realistic Scale</span>
+                        <input class="settings-slider max-w-10" type="range" min="0" max="1" value="0" id="settingRealisticSize">
+                        <span class="settings-span flex-1">Scale</span>
+                        <input class="settings-slider max-w-20" type="range" min="0.2" step="0.1" max="5" value="1.5" id="settingScale">
+                    </div>
+                    <div class="settings-row flex items-center text-center">
+                    </div>
+                </div>
                 <button
                 type="submit"
-                class="w-full py-2 px-4 bg-violet-500 text-white font-semibold rounded-lg shadow-md hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2"
+                class="w-full py-2 px-4 bg-violet-500 text-white font-semibold rounded-lg shadow-md hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 duration-200"
                 >
-                Upload & Shred
+                Activate Shredder
                 </button>
             </form>
         </div>

@@ -17,7 +17,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
     secondImage.classList.add('shredder-image');
     shredder.appendChild(secondImage);
 
-    const realSize = true;
+    const realSize = getConfig('RealisticSize') == 1;
 
     if (file) {
         let pdfMode = file.type === 'application/pdf';
@@ -31,7 +31,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                 
                 const page = await pdf.getPage(1);
                 
-                const viewport = page.getViewport({ scale: realSize ? 0.75 : 2.5 });
+                const viewport = page.getViewport({ scale: realSize ? 0.75 : 1.5 });
                 const canvas = document.createElement('canvas');
                 const context = canvas.getContext('2d');
                 canvas.height = viewport.height;
@@ -92,8 +92,8 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
 
                 const img = preview.querySelector('img');
 
-                const sizeX = 40, sizeY = 10;
-                const maxObjects = 400;
+                const sizeX = getConfig('XSpacing'), sizeY = getConfig('YSpacing');
+                const maxObjects = getConfig('MaxObjects');
 
                 let imgToShred = new Image();
                 imgToShred.src = srcToShred;
@@ -141,6 +141,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
 
                         div.style.position = 'absolute';
                         // div.style.left = `${5+(i % 18)*5/*+randomPercentage(5)*/}%`
+                        
                         const dxpx = 40, dypx = 200;
                         // const dxpx = 20, dypx = 75;
 
@@ -260,3 +261,7 @@ CountdownLatch.prototype.countDown = function () {
 CountdownLatch.prototype.await = function(callback) {
     this.waitBlock = callback;
 };
+
+function getConfig(name) {
+    return document.getElementById(`setting${name}`).value;
+}
