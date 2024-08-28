@@ -29,9 +29,14 @@ There are 7 configuration sliders available in the main form:
 | Use Realistic Scale | Overrides <kbd>Scale</kbd> setting by trying to size the shreds accurately.                                           |
 | Scale               | Changes the relative size of the paper shreds. This option is disabled if <kbd>Use Realistic Scale</kbd> is selected. |
 
+<img src="https://raw.githubusercontent.com/AdrianR3/paper-shredder/8abdbf6b71bc4e92605e210aaa47686546a56e35/images/settings.png" width="300"></img>
 ## Images
 
-`Coming soon...`
+![Before Shredding Example](https://raw.githubusercontent.com/AdrianR3/paper-shredder/8abdbf6b71bc4e92605e210aaa47686546a56e35/images/repository-open-graph-template.png)
+
+**turns into**
+
+![Shredded Image Example](https://raw.githubusercontent.com/AdrianR3/paper-shredder/8abdbf6b71bc4e92605e210aaa47686546a56e35/images/shredded_github_image.png)
 
 ## Developing
 
