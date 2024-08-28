@@ -20,9 +20,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
     const realSize = getConfig('RealisticSize') == 1;
 
     if (file) {
-        let pdfMode = file.type === 'application/pdf';
-
-        if (pdfMode) {
+        if (file.type === 'application/pdf') {
             console.log('PDF detected.')
             try {
                 const pdfUrl = URL.createObjectURL(file);
@@ -48,8 +46,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
     
                 preview.innerHTML = `<img src="${dataURL}" class="image-preview">`;
                 srcToShred = dataURL;
-                
-                pdfMode = false;
+
             } catch (error) {
                 console.error('Error rendering PDF:', error);
             }
@@ -77,7 +74,6 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
             complete: function(anim) {
 
                 document.getElementById('formContainer').classList.add('dissappear');
-                // document.getElementById('formContainer').classList.add('invisible');
 
                 anime({
                     targets: shredder,
@@ -142,7 +138,6 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                         div.style.height = `${height * trueScale}px`;
 
                         const shreddedImg = document.createElement('img');
-                        // shreddedImg.src = srcToShred;
                         cropImageDataURL(srcToShred, i*width, y*height, imgToShred.width/sizeX, imgToShred.height/sizeY, function(croppedDataURL) {
 
                             shreddedImg.src = croppedDataURL;
@@ -164,7 +159,6 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
                         div.style.position = 'absolute';
                         
                         const dxpx = getConfig('XSpacing'), dypx = getConfig('YSpacing');
-                        // const dxpx = 20, dypx = 75;
 
                         div.style.left = `${i * dxpx}px`
                         div.style.top = `${y * dypx}px`
@@ -200,30 +194,6 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
         setTimeout(() => {});
     }
 });
-
-// Not used yet
-
-// const dropArea = document.getElementById('formContainer');
-// const fileInput = document.getElementById('file');
-
-// dropArea.addEventListener('dragover', (event) => {
-//     event.preventDefault();
-//     dropArea.classList.add('dragover');
-// });
-
-// dropArea.addEventListener('dragleave', () => {
-//     dropArea.classList.remove('dragover');
-// });
-
-// dropArea.addEventListener('drop', (event) => {
-//     event.preventDefault();
-//     dropArea.classList.remove('dragover');
-//     const files = event.dataTransfer.files;
-//     if (files.length > 0) {
-//         fileInput.files = files; // Simulate file selection
-//         // Here you can handle the file upload or display the file
-//     }
-// });
 
 function cropImageDataURL(imageData, x, y, width, height, callback) {
     const img = new Image();
