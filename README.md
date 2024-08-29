@@ -6,6 +6,8 @@
 
 <br>
 
+![Virtual Paper Shredder Banner](https://raw.githubusercontent.com/AdrianR3/paper-shredder/20be33a82c1038b2b7e9d2eca4806c8aedc79a22/images/virtual_paper_shredder_banner.png)
+
 ## Live Website
 
 **See the virtual paper shredder in action: https://papershredder.netlify.app/**
