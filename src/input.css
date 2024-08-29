@@ -22,6 +22,16 @@
     /* @apply mt-1 inset-0 flex items-end text-right px-3 text-gray-500 bg-violet-700; */
 }
 
+#links > a {
+    @apply dark:text-blue-400 hover:underline mr-2;
+}
+
+#links > a:not(:last-child)::after {
+    @apply ml-2 text-gray-300 dark:text-gray-400 no-underline;
+    /* @apply dark:text-blue-400 hover:underline; */
+    content: "|";
+}
+
 .file-input::-webkit-file-upload-button {
     visibility: visible;
 }
