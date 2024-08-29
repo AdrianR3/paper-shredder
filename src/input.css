@@ -13,6 +13,15 @@
     /* visibility: hidden; */
 }
 
+.color-transition {
+    @apply transition-colors duration-200;
+}
+
+#sample {
+    @apply block py-2 px-4 border rounded-md text-sm font-medium bg-teal-50 text-green-700 hover:bg-green-100 active:bg-green-200 color-transition;
+    /* @apply mt-1 inset-0 flex items-end text-right px-3 text-gray-500 bg-violet-700; */
+}
+
 .file-input::-webkit-file-upload-button {
     visibility: visible;
 }

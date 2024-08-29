@@ -17,14 +17,17 @@
             <form id="uploadForm" method="post" enctype="multipart/form-data">
                 <div class="mb-4">
                     <label for="file" class="form-label">Select PDF document or image to shred</label>
-                    <input
-                        id="file"
-                        name="file"
-                        type="file"
-                        accept="image/*,application/pdf"
-                        title="Upload File"
-                        class="file-input mt-1 block w-full text-sm text-gray-500 dark:text-gray-400 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:font-medium file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
-                    >
+                    <div class="flex">
+                        <input
+                            id="file"
+                            name="file"
+                            type="file"
+                            accept="image/*,application/pdf"
+                            title="Upload File"
+                            class="flex-none file-input mt-1 block text-sm text-gray-500 dark:text-gray-400 file:py-2 file:px-4 file:border file:border-gray-50 file:rounded-md file:text-sm file:font-medium file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 file:color-transition"
+                        >
+                        <button id="sample" type="button">Try Sample</button>
+                    </div>
                 </div>
                 <div class="mb-5 dark:text-white">
                     <label class="form-label">Shredder Settings</label>
@@ -55,7 +58,7 @@
                 </div>
                 <button
                 type="submit"
-                class="w-full py-2 px-4 bg-violet-500 text-white font-semibold rounded-lg shadow-md hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 duration-200"
+                class="w-full py-2 px-4 bg-violet-500 text-white font-semibold rounded-lg shadow-md hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 color-transition"
                 >
                 Activate Shredder
                 </button>
