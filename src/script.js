@@ -18,6 +18,7 @@ document.getElementById('sample').addEventListener('click', async function(event
     handleForm(null, getSampleImageURI());
 });
 
+// document.querySelectorAll('.switch').forEach(switchInput => switchInput.addEventListener('click', () => {}));
 
 async function handleForm(event, sampleImageSrc = false) {
     if (event) event.preventDefault();

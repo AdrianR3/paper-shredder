@@ -876,6 +876,8 @@ video {
 
 #links > a {
   margin-right: 0.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
 #links > a:hover {
@@ -1043,6 +1045,11 @@ body.background::before {
   opacity: 0.7;
   transition: opacity .2s;
   margin: 0px 10px 0px 0px;
+}
+
+.settings-slider.switch {
+  height: 20px;
+  border-radius: 10px;
 }
 
 .settings-slider:hover {
