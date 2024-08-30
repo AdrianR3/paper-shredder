@@ -12,6 +12,8 @@
 
 **See the virtual paper shredder in action: https://papershredder.netlify.app/**
 
+Try clicking the green <kbd>Try Sample</kbd> button. You can click and drag paper shreds around too!
+
 <br>
 
 ## Usage
